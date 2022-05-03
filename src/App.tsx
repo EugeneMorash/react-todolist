@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {TodoList} from "./Todolist";
+
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <AppTitle subheading={'Many TODOLIST!!'}/>
+            <TodoList title={"Junior"} />
+            <TodoList title={"Cook"}/>
+        </div>
+    );
+}
+
+
+type AppTitlePropsType = {
+    subheading: string
+}
+
+
+function AppTitle(props: AppTitlePropsType) {
+    return (
+        <h2>{props.subheading}</h2>
+    )
 }
 
 export default App;
