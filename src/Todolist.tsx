@@ -9,6 +9,11 @@ type TodoListPropsType = {
 }
 
 export function TodoList(props: TodoListPropsType) {
+
+
+
+
+
     const taskArr = props.taskList.map(task => {
         return (
             <li key={task.id}>
