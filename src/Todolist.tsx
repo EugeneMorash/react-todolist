@@ -1,9 +1,11 @@
 import React from 'react';
-import {TasksArr} from "./App";
+import {TasksArrType} from "./App";
+
 
 type TodoListPropsType = {
-    title: string;
-    taskList: TasksArr;
+    title: string
+    taskList: TasksArrType
+    setFilter: (filter: string) => void
 }
 
 export function TodoList(props: TodoListPropsType) {
@@ -16,6 +18,12 @@ export function TodoList(props: TodoListPropsType) {
         )
     })
 
+
+    const onCLickHandler = (filter: string) => {
+        props.setFilter(filter);
+    }
+
+
     return (
         <div className="todoList">
             <h3>{props.title}</h3>
@@ -25,28 +33,14 @@ export function TodoList(props: TodoListPropsType) {
             </div>
             <ul>
                 {taskArr}
-
-                {/*<li>*/}
-                {/*    <input type="checkbox" checked={true}/>*/}
-                {/*    <span>HTML</span>*/}
-                {/*</li>*/}
-                {/*<li>*/}
-                {/*    <input type="checkbox" checked={true}/>*/}
-                {/*    <span>CSS</span>*/}
-                {/*</li>*/}
-                {/*<li>*/}
-                {/*    <input type="checkbox" checked={true}/>*/}
-                {/*    <span>JS</span>*/}
-                {/*</li>*/}
-                {/*<li>*/}
-                {/*    <input type="checkbox"/>*/}
-                {/*    <span>TS</span>*/}
-                {/*</li>*/}
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                {/*<button onClick={ () => { onCLickHandler() }} type="button">All</button>*/}
+                {/*<button onClick={ onCLickHandler }} type="button">All</button>*/}
+
+                <button onClick={ () => {onCLickHandler('all')} } type="button">All</button>
+                <button onClick={ () => {onCLickHandler('active')} } type="button">Active</button>
+                <button onClick={ () => {onCLickHandler('completed')} } type="button">Completed</button>
             </div>
         </div>
     );
