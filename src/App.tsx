@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TodoList} from "./Todolist";
 
 export type TasksArrType = Array<LangType>;
@@ -8,7 +8,7 @@ export type LangType = {
     isDone: boolean
 }
 
-const tasks: TasksArrType = [
+export const tasks: TasksArrType = [
     {id: 100, title: "HTML", isDone: true},
     {id: 101, title: "CSS", isDone: true},
     {id: 102, title: "JS", isDone: true},
@@ -20,30 +20,18 @@ const tasks: TasksArrType = [
 
 
 function App() {
-    const [filter, setFilter] = useState('all');
-
-    let taskList: TasksArrType = tasks;
-
-    if (filter === "active") {
-        taskList = tasks.filter(t => !t.isDone);
-    }
-    if (filter === "completed") {
-        taskList = tasks.filter(t => t.isDone);
-    }
-
 
     return (
         <div>
-            <TodoList title={"Junior"} taskList={taskList}  setFilter={setFilter}/>
-            {/*<TodoList title={"Cook"}/>*/}
+            <TodoList title={"Junior"} tasks={tasks}/>
         </div>
     );
 }
 
+
+
 // Перенести useState и процесс фильтрации в компоненту todolist.  Сделать коммит.
 // Затем снова вернуть useState и процесс фильтрации в App (Для понимания и закрепления!),  не возвращаясь к предыдущему коммиту
-
-
 
 
 export default App;

@@ -1,20 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TasksArrType} from "./App";
 
 
-type TodoListPropsType = {
+export type TodoListPropsType = {
     title: string
-    taskList: TasksArrType
-    setFilter: (filter: string) => void
+    tasks: TasksArrType
+    // taskList: TasksArrType
+    // setFilter: (filter: string) => void
 }
 
 export function TodoList(props: TodoListPropsType) {
 
+    const [filter, setFilter] = useState('all');
 
+    // const setFilter = (newFIlter) => {
+    //     filter = newFIlter
+    //     rerender()
+    // }
 
+    let taskList = props.tasks;
 
+    if (filter === "active") {
+        taskList =  props.tasks.filter(t => !t.isDone);
+    }
+    if (filter === "completed") {
+        taskList =  props.tasks.filter(t => t.isDone);
+    }
 
-    const taskArr = props.taskList.map(task => {
+    const taskArr = taskList.map(task => {
         return (
             <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
@@ -23,11 +36,9 @@ export function TodoList(props: TodoListPropsType) {
         )
     })
 
-
     const onCLickHandler = (filter: string) => {
-        props.setFilter(filter);
+        setFilter(filter);
     }
-
 
     return (
         <div className="todoList">
