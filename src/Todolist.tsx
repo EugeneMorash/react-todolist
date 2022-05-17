@@ -1,43 +1,41 @@
-import React, {useState} from 'react';
-import {TasksArrType} from "./App";
+import React from 'react';
+import {FilterType, TasksArrType} from "./App";
 
 
 export type TodoListPropsType = {
     title: string
-    tasks: TasksArrType
-    // taskList: TasksArrType
-    // setFilter: (filter: string) => void
+    taskList: TasksArrType
+    todoListHandler: (filter: FilterType) => void
+    deleteTask: (id: number) => void;
 }
+
 
 export function TodoList(props: TodoListPropsType) {
 
-    const [filter, setFilter] = useState('all');
 
-    // const setFilter = (newFIlter) => {
-    //     filter = newFIlter
-    //     rerender()
-    // }
 
-    let taskList = props.tasks;
+    const taskArr = props.taskList.map(task => {
+        const deleteClickHandler = (id: number) => {
+            props.deleteTask(id)
+        }
 
-    if (filter === "active") {
-        taskList =  props.tasks.filter(t => !t.isDone);
-    }
-    if (filter === "completed") {
-        taskList =  props.tasks.filter(t => t.isDone);
-    }
-
-    const taskArr = taskList.map(task => {
         return (
             <li key={task.id}>
                 <input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
+                <button onClick={() => {deleteClickHandler(task.id)}} type="button">Delete</button>
             </li>
         )
     })
 
-    const onCLickHandler = (filter: string) => {
-        setFilter(filter);
+    const onClickAllHandler = () => {
+        props.todoListHandler("all");
+    }
+    const onClickActiveHandler = () => {
+        props.todoListHandler("active");
+    }
+    const onClickCompletedHandler = () => {
+        props.todoListHandler("completed");
     }
 
     return (
@@ -51,12 +49,9 @@ export function TodoList(props: TodoListPropsType) {
                 {taskArr}
             </ul>
             <div>
-                {/*<button onClick={ () => { onCLickHandler() }} type="button">All</button>*/}
-                {/*<button onClick={ onCLickHandler }} type="button">All</button>*/}
-
-                <button onClick={ () => {onCLickHandler('all')} } type="button">All</button>
-                <button onClick={ () => {onCLickHandler('active')} } type="button">Active</button>
-                <button onClick={ () => {onCLickHandler('completed')} } type="button">Completed</button>
+                <button onClick={onClickAllHandler} type="button">All</button>
+                <button onClick={onClickActiveHandler} type="button">Active</button>
+                <button onClick={onClickCompletedHandler} type="button">Completed</button>
             </div>
         </div>
     );
