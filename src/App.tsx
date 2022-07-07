@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import {Todolist} from './Todolist';
-import {v1} from 'uuid';
-import {AddItemForm} from "./AddItemForm";
+import { Todolist } from './Todolist';
+import { v1 } from 'uuid';
+import { AddItemForm } from "./AddItemForm";
+import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from "@material-ui/core";
+import { Menu } from "@material-ui/icons";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -28,36 +30,47 @@ function App() {
     const todolistID1 = v1();
     const todolistID2 = v1();
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
-        {id: todolistID1, title: 'What to learn', filter: 'all'},
-        {id: todolistID2, title: 'What to buy', filter: 'all'},
+        { id: todolistID1, title: 'What to learn', filter: 'all' },
+        { id: todolistID2, title: 'What to buy', filter: 'all' },
     ])
     const [tasks, setTasks] = useState<TasksType>({
         [todolistID1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: true},
-            {id: v1(), title: "Rest API", isDone: false},
-            {id: v1(), title: "GraphQL", isDone: false},
+            { id: v1(), title: "HTML&CSS", isDone: true },
+            { id: v1(), title: "JS", isDone: true },
+            { id: v1(), title: "ReactJS", isDone: true },
+            { id: v1(), title: "Rest API", isDone: false },
+            { id: v1(), title: "GraphQL", isDone: false },
         ],
         [todolistID2]: [
-            {id: v1(), title: "Chocolate", isDone: true},
-            {id: v1(), title: "Fresh Water", isDone: false},
-            {id: v1(), title: "Candy Cane", isDone: true},
-            {id: v1(), title: "Apple Juice", isDone: true},
-            {id: v1(), title: "Milk", isDone: false},
+            { id: v1(), title: "Chocolate", isDone: true },
+            { id: v1(), title: "Fresh Water", isDone: false },
+            { id: v1(), title: "Candy Cane", isDone: true },
+            { id: v1(), title: "Apple Juice", isDone: true },
+            { id: v1(), title: "Milk", isDone: false },
         ]
     });
 
-    //
+    function changeTodolistTitle(todolistID: string, title: string) {
+        setTodolists(todolists.map(tl => tl.id === todolistID ? { ...tl, title } : tl))
+    }
+
+    function changeTaskTitle(todolistID: string, id: string, title: string) {
+        setTasks({
+            ...tasks,
+            [todolistID]: tasks[todolistID].map(task => {
+                return task.id === id ? { ...task, title } : task
+            })
+        })
+    }
 
     function deleteTodolist(todolistID: string) {
         setTodolists(todolists.filter((tl) => tl.id !== todolistID))
-        delete tasks[todolistID]
+        delete tasks[todolistID] //???
     }
 
     function changeFilter(todolistID: string, value: FilterValuesType) {
         setTodolists(todolists.map((tl) => {
-            return tl.id === todolistID ? {...tl, filter: value} : tl
+            return tl.id === todolistID ? { ...tl, filter: value } : tl
         }))
     }
 
@@ -69,7 +82,7 @@ function App() {
     }
 
     function addTask(todolistID: string, title: string) {
-        let task = {id: v1(), title, isDone: false};
+        let task = { id: v1(), title, isDone: false };
         // let newTasks = [task, ...tasks];
         // setTasks(newTasks);
         setTasks({
@@ -82,7 +95,7 @@ function App() {
         setTasks({
             ...tasks,
             [todolistID]: tasks[todolistID].map(task => (
-                taskId === task.id ? {...task, isDone} : task
+                taskId === task.id ? { ...task, isDone } : task
             ))
         })
     }
@@ -99,19 +112,26 @@ function App() {
         }
 
         return (
-            <Todolist key={tl.id}
-                      todolistID={tl.id}
-                      title={tl.title}
-                      filter={tl.filter}
-                      tasks={tasksForTodolist}
+            <Grid item key={tl.id}>
+                <Paper elevation={3} style={{ padding: '25px' }}>
+                    <Todolist
+                        todolistID={tl.id}
+                        title={tl.title}
+                        filter={tl.filter}
+                        tasks={tasksForTodolist}
 
-                      removeTask={removeTask}
-                      addTask={addTask}
-                      changeTaskStatus={changeStatus}
+                        removeTask={removeTask}
+                        addTask={addTask}
+                        changeTaskStatus={changeStatus}
+                        changeTaskTitle={changeTaskTitle}
 
-                      deleteTodolist={deleteTodolist}
-                      changeFilter={changeFilter}
-            />
+                        deleteTodolist={deleteTodolist}
+                        changeTodolistTitle={changeTodolistTitle}
+                        changeFilter={changeFilter}
+                    />
+                </Paper>
+            </Grid>
+
         )
     })
 
@@ -124,13 +144,31 @@ function App() {
         }
 
         setTodolists([...todolists, newTodolist])
-        setTasks({...tasks, [newTodolistID]: []})
+        setTasks({ ...tasks, [newTodolistID]: [] })
     }
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodolist}/>
-            {todolistArray.length ? todolistArray : 'Create your todolist'}
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" aria-label="menu">
+                        <Menu />
+                    </IconButton>
+                    <Typography variant="h6">
+                        Our Trello
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <AddItemForm addItem={addTodolist} />
+                <Grid container spacing={3} justifyContent="center">
+
+                    {todolistArray.length ? todolistArray : 'Create your todolist'}
+
+
+                </Grid>
+            </Container>
+
         </div>
     );
 }
