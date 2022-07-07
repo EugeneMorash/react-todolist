@@ -5,14 +5,11 @@ import { v1 } from 'uuid';
 import { AddItemForm } from "./AddItemForm";
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
+import {TodolistType} from "./store/todolist-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+
 
 export type TasksType = {
     [todolistID: string]: Array<TaskType>
@@ -49,11 +46,10 @@ function App() {
             { id: v1(), title: "Milk", isDone: false },
         ]
     });
+    // BLL
 
-    function changeTodolistTitle(todolistID: string, title: string) {
-        setTodolists(todolists.map(tl => tl.id === todolistID ? { ...tl, title } : tl))
-    }
 
+    // Tasks
     function changeTaskTitle(todolistID: string, id: string, title: string) {
         setTasks({
             ...tasks,
@@ -62,25 +58,12 @@ function App() {
             })
         })
     }
-
-    function deleteTodolist(todolistID: string) {
-        setTodolists(todolists.filter((tl) => tl.id !== todolistID))
-        delete tasks[todolistID] //???
-    }
-
-    function changeFilter(todolistID: string, value: FilterValuesType) {
-        setTodolists(todolists.map((tl) => {
-            return tl.id === todolistID ? { ...tl, filter: value } : tl
-        }))
-    }
-
     function removeTask(todolistID: string, id: string) {
         setTasks({
             ...tasks,
             [todolistID]: tasks[todolistID].filter(task => task.id !== id)
         })
     }
-
     function addTask(todolistID: string, title: string) {
         let task = { id: v1(), title, isDone: false };
         // let newTasks = [task, ...tasks];
@@ -90,7 +73,6 @@ function App() {
             [todolistID]: [task, ...tasks[todolistID]]
         })
     }
-
     function changeStatus(todolistID: string, taskId: string, isDone: boolean) {
         setTasks({
             ...tasks,
@@ -99,6 +81,34 @@ function App() {
             ))
         })
     }
+
+    // Todolist
+    function deleteTodolist(todolistID: string) {
+        setTodolists(todolists.filter((tl) => tl.id !== todolistID))
+        delete tasks[todolistID] //???
+    }
+    function addTodolist(title: string) {
+
+        const newTodolistID = v1()
+        const newTodolist: TodolistType = {
+            id: newTodolistID,
+            title,
+            filter: 'all'
+        }
+
+        setTodolists([...todolists, newTodolist])
+        setTasks({ ...tasks, [newTodolistID]: [] })
+    }
+    function changeFilter(todolistID: string, value: FilterValuesType) {
+        setTodolists(todolists.map((tl) => {
+            return tl.id === todolistID ? { ...tl, filter: value } : tl
+        }))
+    }
+    function changeTodolistTitle(todolistID: string, title: string) {
+        setTodolists(todolists.map(tl => tl.id === todolistID ? { ...tl, title } : tl))
+    }
+
+
 
 
     const todolistArray = todolists.map((tl) => {
@@ -135,17 +145,7 @@ function App() {
         )
     })
 
-    function addTodolist(title: string) {
-        const newTodolistID = v1()
-        const newTodolist: TodolistType = {
-            id: newTodolistID,
-            title,
-            filter: 'all'
-        }
 
-        setTodolists([...todolists, newTodolist])
-        setTasks({ ...tasks, [newTodolistID]: [] })
-    }
 
     return (
         <div className="App">
