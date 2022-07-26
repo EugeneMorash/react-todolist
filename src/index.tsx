@@ -16,12 +16,13 @@ root.render(
     </Provider>
 )
 
+
 // react-redux
 // 1.
 // HOC - connect()()
 
-// 2. useSelector() - возвращает новый стейт и занимается перерисовкой
-// 3. useDispatch() - диспатчит action (диспатчит во все редуюсер)
+//* 2. useSelector() - возвращает новый стейт и занимается перерисовкой
+//* 3. useDispatch() - диспатчит action (диспатчит во все редуюсер)
 
 
 serviceWorker.unregister();

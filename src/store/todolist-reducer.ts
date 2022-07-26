@@ -33,7 +33,9 @@ export type AddTodolistAT = ReturnType<typeof addTodolistAC>
 // action - объект, который обязательно хранит свойство type
 // Также может хранить ещё дополнительную информацию для преобразования state
 
-export const todolistReducer = (todolists: Array<TodolistType>, action: ActionType): Array<TodolistType> => {
+const initialState: Array<TodolistType> = []
+
+export const todolistReducer = (todolists: Array<TodolistType> = initialState, action: ActionType): Array<TodolistType> => {
     switch (action.type) {
         case CHANGE_TODOLIST_FILTER:
             return (todolists.map((tl) => {

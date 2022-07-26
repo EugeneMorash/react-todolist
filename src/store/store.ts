@@ -12,11 +12,14 @@ export type AppRootStateType = ReturnType<typeof rootReducer> // Тип всег
 
 
 // store принимает на вход один(!) reduceR
-export const store = createStore(rootReducer)
-// _state
-// getState()
-// subscribe() // Вызывается, когда изменился state
-// dispatch(action) //  вызывает reducer, передавая action
+export const store = createStore(rootReducer) // Передаётся по контексту
+
+// _state - приватное поле, напрямую не обращаемся
+
+// getState() // вызывает useSelector из store через контекст
+// subscribe(callback) // callback вызывается, когда изменился state // за нас делает useSelector
+
+// dispatch(action) //  вызывает reducer, передавая action - обновляет стейт // вызывается из контекста через хук useDispatch (react-redux)
 
 
 // Чисто отладочная информация
