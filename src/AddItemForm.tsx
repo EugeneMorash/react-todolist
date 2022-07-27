@@ -47,9 +47,7 @@ export function AddItemForm(props: PropsType) {
                        helperText={error}
             />
 
-
             {/*<button onClick={addItem}>+</button>*/}
-
             <IconButton onClick={addItem} color={'primary'} >
                 <AddBox fontSize={'inherit'}/>
             </IconButton>
