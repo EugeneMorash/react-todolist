@@ -1,13 +1,13 @@
-import React, {ChangeEvent} from 'react';
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
-import {Delete as DeleteIcon} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType} from "./store/tasks-reducers";
-import {changeTodolistFilterAC, TodolistType} from "./store/todolist-reducer";
-import {AppRootStateType} from "./store/store";
-import {TodolistHeader} from "./store/components/TodolistHeader";
+import React, { ChangeEvent } from 'react';
+import { AddItemForm } from "./AddItemForm";
+import { EditableSpan } from "./EditableSpan";
+import { Button, Checkbox, IconButton } from "@material-ui/core";
+import { Delete as DeleteIcon } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType } from "./store/tasks-reducers";
+import { changeTodolistFilterAC, TodolistType } from "./store/todolist-reducer";
+import { AppRootStateType } from "./store/store";
+import { TodolistHeader } from "./store/components/TodolistHeader";
 
 
 type PropsType = {
@@ -44,7 +44,7 @@ export function Todolist(props: PropsType) {
                 title={props.todolist.title}
             />
 
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} />
 
             <ul>
                 {
@@ -65,13 +65,14 @@ export function Todolist(props: PropsType) {
                             />
 
 
-                            <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
+                            <EditableSpan title={t.title} changeTitle={changeTaskTitle} />
+
                             <IconButton onClick={onClickHandler}
-                                        aria-label="delete"
-                                        size="small"
-                                        color="secondary"
+                                aria-label="delete"
+                                size="small"
+                                color="secondary"
                             >
-                                <DeleteIcon/>
+                                <DeleteIcon />
                             </IconButton>
                         </li>
                     })
@@ -79,18 +80,18 @@ export function Todolist(props: PropsType) {
             </ul>
             <div>
                 <Button onClick={onAllClickHandler}
-                        variant="contained"
-                        disableElevation
-                        color={props.todolist.filter === 'all' ? "primary" : "default"}
-                        style={{margin: "5px"}}
+                    variant="contained"
+                    disableElevation
+                    color={props.todolist.filter === 'all' ? "primary" : "default"}
+                    style={{ margin: "5px" }}
                 >
                     All
                 </Button>
                 <Button onClick={onActiveClickHandler}
-                        variant="contained"
-                        disableElevation
-                        color={props.todolist.filter === 'active' ? "primary" : "default"}
-                        style={{margin: "5px"}}
+                    variant="contained"
+                    disableElevation
+                    color={props.todolist.filter === 'active' ? "primary" : "default"}
+                    style={{ margin: "5px" }}
                 >
                     Active
                 </Button>
@@ -99,7 +100,7 @@ export function Todolist(props: PropsType) {
                     variant="contained"
                     disableElevation
                     color={props.todolist.filter === 'completed' ? "primary" : "default"}
-                    style={{margin: "5px"}}
+                    style={{ margin: "5px" }}
                 >
                     Completed
                 </Button>

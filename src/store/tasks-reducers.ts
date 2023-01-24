@@ -1,5 +1,6 @@
-import {v1} from "uuid";
-import {ADD_TODOLIST, AddTodolistAT, REMOVE_TODOLIST, RemoveTodolistAT} from "./todolist-reducer";
+import { useState } from "react";
+import { v1 } from "uuid";
+import { ADD_TODOLIST, AddTodolistAT, REMOVE_TODOLIST, RemoveTodolistAT } from "./todolist-reducer";
 
 export type TasksType = {
     [todolistID: string]: Array<TaskType>
@@ -65,7 +66,7 @@ export const tasksReducer = (tasks: TasksType = initialState, action: ActionType
                 [action.todolistID]: []
             }
         case REMOVE_TODOLIST:
-            const newTasks = {...tasks}
+            const newTasks = { ...tasks }
             delete newTasks[action.todolistID]
             return newTasks
         default:
@@ -101,3 +102,5 @@ export const changeTaskTitleAC = (todolistID: string, taskID: string, title: str
     taskID,
     title
 }) as const
+
+

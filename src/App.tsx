@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import { Todolist } from './Todolist';
+import {Todolist} from './Todolist';
 
-import { AddItemForm } from "./AddItemForm";
-import { AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography } from "@material-ui/core";
-import { Menu } from "@material-ui/icons";
-import { addTodolistAC, TodolistType } from "./store/todolist-reducer";
-import { useDispatch, useSelector } from 'react-redux';
-import { AppRootStateType } from "./store/store";
+import {AddItemForm} from "./AddItemForm";
+import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
+import {addTodolistAC, TodolistType} from "./store/todolist-reducer";
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from "./store/store";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -28,8 +28,8 @@ function App() {
     const todolistArray = todolists.map((tl) => {
         return (
             <Grid item key={tl.id}>
-                <Paper elevation={3} style={{ padding: '25px' }}>
-                    <Todolist todolist={tl} />
+                <Paper elevation={3} style={{padding: '25px'}}>
+                    <Todolist todolist={tl}/>
                 </Paper>
             </Grid>
         )
@@ -41,7 +41,7 @@ function App() {
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
-                        <Menu />
+                        <Menu/>
                     </IconButton>
                     <Typography variant="h6">
                         My Trello
@@ -49,8 +49,8 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <AddItemForm addItem={addTodolist} />
-                <Grid container spacing={3} justifyContent="center">
+                <AddItemForm addItem={addTodolist}/>
+                <Grid container spacing={3} justifyContent='center'>
                     {todolistArray.length ? todolistArray : 'Create your todolist'}
                 </Grid>
             </Container>
